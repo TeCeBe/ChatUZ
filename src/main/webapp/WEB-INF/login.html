@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>Login</title>
     <style>
         body {
             display: flex;
@@ -11,29 +11,71 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
-            background: url('/WEB-INF/zdjecia/tlo.jpg') no-repeat center center fixed;
+            background: url('https://wallpapers.com/images/hd/city-background-vk49vrjolueijq7a.jpg') no-repeat center center fixed;
             background-size: cover;
         }
-        form {
+        .login-container {
             text-align: center;
-            padding: 20px;
-            background-color: rgba(0, 0, 0, 0.2);
+            padding: 50px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 2px solid #808080;
             border-radius: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px;
         }
-
+        .login-container h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: white;
+        }
+        .login-container label {
+            font-size: 20px;
+            display: block;
+            margin-bottom: 10px;
+            color: white;
+        }
+        .login-container input {
+            font-size: 20px;
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 15px;
+            color: white;
+        }
+        .login-container input[type="submit"] {
+            font-size: 20px;
+            margin-top: 10px;
+            color: black;
+        }
+        .create-account-link {
+            text-align: center;
+            margin-top: 10px;
+            color: white;
+        }
+        .create-account-link a {
+            font-size: 16px;
+            text-decoration: none;
+            color: white;
+        }
     </style>
 </head>
 <body>
-<form action="LoginServlet" method="post">
-    <h2>JavaLovers Messenger</h2>
-    <label for="username" >Username:</label>
-    <input type="text" id="username" name="username" required><br>
+<div class="login-container">
 
-    <label for="password"> Password:</label>
-    <input type="password" id="password" name="password" required><br>
+    <form action="hello-servlet" method="post">
+        <h2>Login</h2>
+        <label for="login-username">Username:</label>
+        <input type="text" id="login-username" name="username" required><br>
 
-    <input type="submit" value="Login">
-</form>
+        <label for="login-password">Password:</label>
+        <input type="password" id="login-password" name="password" required><br>
+
+        <input type="submit" value="Login">
+    </form>
+
+
+    <div class="create-account-link">
+        <a href="register.html">Stworz konto</a>
+    </div>
+</div>
 </body>
 </html>
