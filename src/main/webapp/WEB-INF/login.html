@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: url('/WEB-INF/zdjecia/tlo.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+        form {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+    </style>
+</head>
+<body>
+<form action="LoginServlet" method="post">
+    <h2>JavaLovers Messenger</h2>
+    <label for="username" >Username:</label>
+    <input type="text" id="username" name="username" required><br>
+
+    <label for="password"> Password:</label>
+    <input type="password" id="password" name="password" required><br>
+
+    <input type="submit" value="Login">
+</form>
+</body>
+</html>
