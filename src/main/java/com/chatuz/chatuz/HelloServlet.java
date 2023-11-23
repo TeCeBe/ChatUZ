@@ -1,5 +1,6 @@
 package com.chatuz.chatuz;
 
+
 import java.io.*;
 
 import jakarta.servlet.http.*;
@@ -10,7 +11,7 @@ public class HelloServlet extends HttpServlet {
     private String message;
 
     public void init() {
-        message = "Hello World!";
+        message = "Hello World!egrdgrega";
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
