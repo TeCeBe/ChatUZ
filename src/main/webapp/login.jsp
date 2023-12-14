@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: forge
-  Date: 28.11.2023
-  Time: 19:17
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -64,10 +57,21 @@
             text-decoration: none;
             color: white;
         }
+        .error-message {
+            color: red;
+            margin-bottom: 10px;
+            font-size: 20px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 <div class="login-container">
+
+    <% String error = request.getParameter("error"); %>
+    <% if ("invalid_login".equals(error)) { %>
+    <div class="error-message">Zły login</div>
+    <% } %>
 
     <form action="LoginServlet" method="post">
         <h2>Login</h2>
@@ -79,7 +83,6 @@
 
         <input type="submit" value="Login">
     </form>
-
 
     <div class="create-account-link">
         <a href="register.jsp">Stworz konto</a>

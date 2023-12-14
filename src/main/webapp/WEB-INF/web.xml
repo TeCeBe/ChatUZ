@@ -3,6 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
          version="5.0">
+
     <servlet>
         <servlet-name>RegisterServlet</servlet-name>
         <servlet-class>com.chatuz.chatuz.RegisterServlet</servlet-class>
@@ -20,4 +21,10 @@
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
     </servlet-mapping>
+    <resource-ref>
+        <description>MySQL Datasource example</description>
+        <res-ref-name>jdbc/MyLocalDB</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+    </resource-ref>
 </web-app>

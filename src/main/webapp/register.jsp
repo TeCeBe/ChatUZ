@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: forge
-  Date: 28.11.2023
-  Time: 19:18
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,11 +58,17 @@
             text-decoration: none;
             color: white;
         }
+
     </style>
 </head>
 <body>
 <div class="register-container">
-
+    <%
+        String error = request.getParameter("error");
+        if ("username_taken".equals(error)) {
+            out.print("<div class='error-message'>Nazwa zajeta</div>");
+        }
+    %>
 
     <form action="RegisterServlet" method="post">
         <h2>Stworz konto</h2>
@@ -81,7 +80,6 @@
 
         <input type="submit" value="Register">
     </form>
-
 
     <div class="login-link">
         <a href="login.jsp">Masz juz konto? Zaloguj sie</a>
