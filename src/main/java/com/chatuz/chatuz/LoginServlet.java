@@ -22,6 +22,9 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         if (isValidLogin(username, password)) {
+            HttpSession session = request.getSession();
+            session.setAttribute("username", username);
+
             response.sendRedirect("Main.jsp");
         } else {
             response.sendRedirect("login.jsp?error=invalid_login");
