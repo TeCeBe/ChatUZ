@@ -16,7 +16,14 @@
       flex-direction: column;
     }
     h1 {
-      color: white;
+      color: black;
+    }
+    .text-container {
+      border: 4px solid white;
+      padding: 40px;
+      border-radius: 20px;
+      background-color: rgba(255, 255, 255, 0.6);
+      text-align: center;
     }
     .button {
       margin: 10px;
@@ -43,7 +50,7 @@
     userName = "Nieznany Użytkownik";
   }
 %>
-<div>
+<div class="text-container">
   <h1>Witaj, <%= userName %></h1>
 
   <form action="chat.jsp" method="get" style="margin-bottom: 20px;">

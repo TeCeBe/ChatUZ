@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Odzyskiwanie hasła</title>
     <style>
         body {
             display: flex;
@@ -15,7 +15,7 @@
             background: url('zdjecia/tlo_login_register.jpg') no-repeat center center fixed;
             background-size: cover;
         }
-        .login-container {
+        .password-reset-container {
             text-align: center;
             padding: 50px;
             background-color: rgba(0, 0, 0, 0.5);
@@ -23,34 +23,30 @@
             border-radius: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             margin: 20px;
+            color: white;
         }
-        .login-container h2 {
+        .password-reset-container h2 {
             font-size: 32px;
             margin-bottom: 20px;
             color: white;
         }
-        .login-container label {
+        .password-reset-container label {
             font-size: 20px;
             display: block;
             margin-bottom: 10px;
             color: white;
         }
-        .login-container input {
+        .password-reset-container input {
             font-size: 20px;
             width: 80%;
             padding: 10px;
             margin-bottom: 15px;
             color: black;
         }
-        .login-container input[type="submit"] {
+        .password-reset-container input[type="submit"] {
             font-size: 20px;
             margin-top: 10px;
             color: black;
-        }
-        .powrot_do_logowania a {
-            font-size: 16px;
-            text-decoration: none;
-            color: white;
         }
         .error-message {
             color: red;
@@ -58,17 +54,7 @@
             font-size: 20px;
             font-weight: bold;
         }
-        .odzyskanie-hasla-link {
-            text-align: center;
-            margin-top: 10px;
-            color: white;
-        }
-        .odzyskanie-hasla-link a {
-            font-size: 16px;
-            text-decoration: none;
-            color: #f2f2f2;
-        }
-        .stwórz-konto-link a {
+        .powrot_do_logowania a {
             font-size: 16px;
             text-decoration: none;
             color: white;
@@ -76,32 +62,24 @@
     </style>
 </head>
 <body>
-<div class="login-container">
+<div class="password-reset-container">
 
     <% String error = request.getParameter("error"); %>
-    <% if ("invalid_login".equals(error)) { %>
-    <div class="error-message">Zły login</div>
+    <% if ("invalid_email".equals(error)) { %>
+    <div class="error-message">Nieznany adres email</div>
     <% } %>
 
-    <form action="LoginServlet" method="post">
-        <h2>Login</h2>
-        <label for="login-username">Username:</label>
-        <input type="text" id="login-username" name="username" required><br>
+    <form action="PasswordResetServlet" method="post">
+        <h2>Odzyskiwanie hasła</h2>
+        <label for="reset-email">Email:</label>
+        <input type="email" id="reset-email" name="email" required><br>
 
-        <label for="login-password">Password:</label>
-        <input type="password" id="login-password" name="password" required><br>
-
-        <input type="submit" value="Login">
+        <input type="submit" value="Resetuj hasło">
     </form>
 
-    <div class="stwórz-konto-link">
-        <a href="register.jsp">Stworz konto</a>
+    <div class="powrot_do_logowania">
+        <a href="login.jsp">Powrót do logowania</a>
     </div>
-
-    <div class="odzyskanie-hasla-link">
-        <a href="odzyskiwanie_hasla.jsp">Nie pamiętasz hasła? Odzyskaj je</a>
-    </div>
-
 </div>
 </body>
 </html>
