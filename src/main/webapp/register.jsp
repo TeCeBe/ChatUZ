@@ -58,7 +58,6 @@
             text-decoration: none;
             color: white;
         }
-
     </style>
 </head>
 <body>
@@ -67,6 +66,8 @@
         String error = request.getParameter("error");
         if ("username_taken".equals(error)) {
             out.print("<div class='error-message'>Nazwa zajeta</div>");
+        } else if ("short_password".equals(error)) {
+            out.print("<div class='error-message'>Hasło musi mieć przynajmniej 8 znaków</div>");
         }
     %>
 
