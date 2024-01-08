@@ -6,6 +6,12 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="Java" %>
+<%
+    String userName = (String) session.getAttribute("username");
+    if (userName == null || userName.isEmpty()) {
+        userName = "Anonim";
+    }
+%>
 <html>
 <head>
     <title>Chat</title>
@@ -63,10 +69,11 @@
         background-color: #45a049;
     }
 </style>
+
 </head>
 <body>
 <div id="title">
-    <p><b>Username</b>   ostatnio online: teraz</p>
+    <p><b>${nick}</b>   ostatnio online: teraz</p>
 </div>
 <div id="chatbox">
 </div>
@@ -79,7 +86,8 @@
     {
         var socket = new WebSocket('ws://localhost:8080/ChatUZ-1.0-SNAPSHOT/chat');
         var message = {
-            user: "Użytkownik testowy",
+            id_from: "<%= userName %>",
+            id_to: "${nick}",
             timestamp: new Date(),
             content: document.getElementById("textInput").value,
             target: ""
@@ -125,9 +133,16 @@
         if (minutes < 10) minutes = "0" + minutes;
         if (seconds < 10) seconds = "0" + seconds;
         var formattedDate = day + "/" + month + "/" + year + " " + hours + ":" + minutes + ":" + seconds;
-        newMessage.innerHTML = "<p>(" + formattedDate + ") <strong>" + deserializedMessage.user + ":</strong> " + deserializedMessage.content + "</p>";
-        chatbox.appendChild(newMessage);
-        chatbox.scrollTop = chatbox.scrollHeight;
+        if (deserializedMessage.id_from !== deserializedMessage.id_to)
+        {
+            if (deserializedMessage.id_to === "<%= userName %>")
+            {
+                newMessage.innerHTML = "<p>(" + formattedDate + ") <strong>" + deserializedMessage.id_from + ":</strong> " + deserializedMessage.content + "</p>";
+                chatbox.appendChild(newMessage);
+                chatbox.scrollTop = chatbox.scrollHeight;
+            }
+
+        }
     };
 
     document.getElementById("textInput").addEventListener("keydown", function(e) {
