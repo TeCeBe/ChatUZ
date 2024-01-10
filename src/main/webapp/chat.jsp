@@ -14,7 +14,7 @@
 %>
 <html>
 <head>
-    <title>Chat</title>
+    <title>Chat - ${nick}</title>
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -61,9 +61,9 @@
         color: white;
         border: none;
         font-size: 18px;
-        padding-left: 100px;
+        padding-left: 35px;
         padding-top: 5px;
-        padding-right: 100px;
+        padding-right: 35px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -81,7 +81,10 @@
 </head>
 <body>
 <div id="title">
-    <p><b>${nick}</b>   ostatnio online: teraz</p>
+    <div style="display: flex">
+        <a href="Main.jsp"><img src="imgs/arrow-left.png" style="height: 100%; padding-right: 10px;"></a>
+        <p><b>${nick}</b>   ostatnio online: teraz</p>
+    </div>
     <div>
         <input type="checkbox" id="partyModeCheckbox">
         <label for="partyModeCheckbox">Tryb imprezy</label>
@@ -107,7 +110,6 @@
             } else {
                 var textInput = document.getElementById('textInput');
                 textInput.value = "";
-
             }
         }
         else
@@ -151,6 +153,7 @@
             console.log("Wiadomość wysłana");
             var messageInput = document.getElementById("textInput");
             messageInput.value = "";
+            chatbox.scrollTop = chatbox.scrollHeight;
         }
     }
 
