@@ -11,59 +11,48 @@ import jakarta.json.*;
 import java.sql.*;
 
 public class ChatRedirect extends HttpServlet {
+
+    static {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            throw new ExceptionInInitializerError(e);
+        }
+    }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        String userName = (String) session.getAttribute("username");
+        if (userName == null || userName.isEmpty()) {
+            userName = "Anonim";
+        }
         String nick = request.getParameter("nickname");
         request.setAttribute("nick", nick);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/chat.jsp");
-        dispatcher.forward(request, response);
-        /*try {
-            // Utwórz połączenie z bazą danych
+        try {
             Connection conn = DriverManager.getConnection("jdbc:mysql://sql.freedb.tech:3306/freedb_chatuz?useSSL=false", "freedb_tecebe", "%Dn@fSFRz&ph7%3");
-
-            // Wykonaj zapytanie SQL
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM messages WHERE 'id_from'=sesja AND 'id_to'=link LIMIT 100");
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM (SELECT date, id_from, id_to, message FROM messages WHERE (id_from='" + userName + "' AND id_to='" + nick + "') OR (id_to='" + userName + "' AND id_from='" + nick + "') ORDER BY date DESC LIMIT 100) AS subquery ORDER BY date ASC;");
             ResultSet rs = ps.executeQuery();
-
-            // Przekształć wyniki zapytania na łańcuch JSON
             JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
             while (rs.next()) {
                 JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
-                jsonObjectBuilder.add("id", rs.getInt("id"));
-                jsonObjectBuilder.add("message", rs.getString("message"));
-                // Dodaj inne pola, jeśli są potrzebne
+                jsonObjectBuilder.add("date", rs.getString("date").toString());
+                jsonObjectBuilder.add("id_from", rs.getString("id_from").toString());
+                jsonObjectBuilder.add("id_to", rs.getString("id_to").toString());
+                jsonObjectBuilder.add("message", rs.getString("message").toString());
                 jsonArrayBuilder.add(jsonObjectBuilder.build());
             }
-
-            // Przekaż dane do strony JSP
             request.setAttribute("data", jsonArrayBuilder.build().toString());
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/chat.jsp");
-            dispatcher.forward(request, response);
         } catch (SQLException e) {
             throw new ServletException("Błąd podczas komunikacji z bazą danych", e);
         }
-    }*/
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/chat.jsp");
+        dispatcher.forward(request, response);
+    }
+
+    private Connection getConnection() throws SQLException {
+        String url = "jdbc:mysql://sql.freedb.tech:3306/freedb_chatuz?useSSL=false";
+        String user = "freedb_tecebe";
+        String password = "%Dn@fSFRz&ph7%3";
+        return DriverManager.getConnection(url, user, password);
     }
 }
-
-/*
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>My JSP Page</title>
-    <script>
-        window.onload = function() {
-            var data = JSON.parse('${data}');
-            var div = document.getElementById('myDiv');
-            for (var i = 0; i < data.length; i++) {
-                var p = document.createElement('p');
-                p.textContent = data[i].message;
-                div.appendChild(p);
-            }
-        };
-    </script>
-</head>
-<body>
-<div id="myDiv"></div>
-</body>
-</html>
-*/

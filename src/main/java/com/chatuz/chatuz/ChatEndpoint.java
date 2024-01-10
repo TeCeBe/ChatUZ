@@ -50,6 +50,9 @@ public class ChatEndpoint {
 
     @OnMessage
     public void onMessage(String message, Session session) throws IOException, SQLException, ParseException {
+        for (Session s : session.getOpenSessions()) {
+            s.getBasicRemote().sendText(message);
+        }
         JsonReader jsonReader = Json.createReader(new StringReader(message));
         JsonObject jsonObject = jsonReader.readObject();
         jsonReader.close();

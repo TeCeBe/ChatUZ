@@ -56,7 +56,6 @@
         font-size: 18px;
     }
     #title {
-        width: 100%;
         height: 60px;
         background-color: blue;
         color: white;
@@ -64,9 +63,18 @@
         font-size: 18px;
         padding-left: 100px;
         padding-top: 5px;
+        padding-right: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
     #submitBtn:hover {
         background-color: #45a049;
+    }
+    #emoji-picker
+    {
+        width: 100%;
+        font-size: 30px;
     }
 </style>
 
@@ -74,15 +82,43 @@
 <body>
 <div id="title">
     <p><b>${nick}</b>   ostatnio online: teraz</p>
+    <div>
+        <input type="checkbox" id="partyModeCheckbox">
+        <label for="partyModeCheckbox">Tryb imprezy</label>
+    </div>
 </div>
 <div id="chatbox">
 </div>
 <div id="userInput">
     <input id="textInput" type="text" name="msg" placeholder="Wpisz swoją wiadomość">
     <input id="submitBtn" type="submit" value="Wyślij" onclick="sendMessage();">
+    <div id="emoji-picker">
+        <span>😃</span> <span>😄</span> <span>😂</span> <span>😊</span> <span>😍</span> <span>😘</span> <span>😎</span> <span>😴</span> <span>😡</span>
+    </div>
 </div>
 <script>
     function sendMessage()
+    {
+        var checkbox = document.getElementById('partyModeCheckbox');
+        if (checkbox.checked) {
+            var proceed = confirm("Czy na pewno chcesz kontynuować? Upewnij się, czy wysyłasz wiadomość do odpowiedniej osoby z odpowiednią treścią. Tego nie da się cofnąć!!!");
+            if (proceed) {
+                sendMessageWS();
+            } else {
+                var textInput = document.getElementById('textInput');
+                textInput.value = "";
+
+            }
+        }
+        else
+        {
+            sendMessageWS();
+        }
+
+
+    }
+
+    function sendMessageWS()
     {
         var socket = new WebSocket('ws://localhost:8080/ChatUZ-1.0-SNAPSHOT/chat');
         var message = {
@@ -102,7 +138,9 @@
         if (hours < 10) hours = "0" + hours;
         if (minutes < 10) minutes = "0" + minutes;
         if (seconds < 10) seconds = "0" + seconds;
-        var formattedDate = day + "/" + month + "/" + year + " " + hours + ":" + minutes + ":" + seconds;
+        if (month < 10) month = "0" + month;
+        if (day < 10) day = "0" + day;
+        var formattedDate = year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
         var serializedMessage = JSON.stringify(message);
         var chatbox = document.getElementById("chatbox");
         var newMessage = document.createElement("message");
@@ -148,6 +186,34 @@
     document.getElementById("textInput").addEventListener("keydown", function(e) {
         if (e.key === "Enter") {
             sendMessage();
+        }
+    });
+
+    window.onload = function() {
+        var data = JSON.parse('${data}');
+        var chatbox = document.getElementById("chatbox");
+        for (var i = 0; i < data.length; i++) {
+            var newMessage = document.createElement("message");
+            if (data[i].id_from == "<%= userName %>")
+            {
+                newMessage.innerHTML = "<p style='text-align:right; border-radius: 10px; background-color: blue; color: white; padding: 5px;'>(" + data[i].date + ") <strong>Ja: </strong> " + data[i].message + "</p>";
+            }
+            else
+            {
+                newMessage.innerHTML = "<p>(" + data[i].date + ") <strong>" + data[i].id_from + ":</strong> " + data[i].message + "</p>";
+            }
+
+            chatbox.appendChild(newMessage);
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+    };
+
+    var emojiPicker = document.getElementById('emoji-picker');
+    var textInput = document.getElementById('textInput');
+
+    emojiPicker.addEventListener('click', function(e) {
+        if (e.target.nodeName === 'SPAN') {
+            textInput.value += e.target.textContent;
         }
     });
 
