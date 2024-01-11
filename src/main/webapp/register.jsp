@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,17 +62,24 @@
 </head>
 <body>
 <div class="register-container">
+    <!-- Blok kodu JSP do obsługi błędów rejestracji -->
     <%
         String error = request.getParameter("error");
+        // Wyświetlanie komunikatu o zajętej nazwie użytkownika
         if ("username_taken".equals(error)) {
             out.print("<div class='error-message'>Username zajęty</div>");
-        } else if ("short_password".equals(error)) {
+        }
+        // Wyświetlanie komunikatu o zbyt krótkim haśle
+        else if ("short_password".equals(error)) {
             out.print("<div class='error-message'>Hasło musi mieć przynajmniej 8 znaków</div>");
-        } else if ("email_taken".equals(error)) {
+        }
+        // Wyświetlanie komunikatu o zajętym adresie email
+        else if ("email_taken".equals(error)) {
             out.print("<div class='error-message'>Adres email jest już zajęty</div>");
         }
     %>
 
+    <!-- Formularz rejestracji -->
     <form action="RegisterServlet" method="post">
         <h2>Stworz konto</h2>
         <label for="register-username">Username:</label>
@@ -87,6 +94,7 @@
         <input type="submit" value="Register">
     </form>
 
+    <!-- Link do strony logowania dla użytkowników, którzy mają już konto -->
     <div class="login-link">
         <a href="login.jsp">Masz juz konto? Zaloguj sie</a>
     </div>

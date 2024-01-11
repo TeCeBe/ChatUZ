@@ -1,4 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!--
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,7 +70,7 @@
     <div class="error-message">Nieznany adres email</div>
     <% } %>
 
-    <form action="PasswordResetServlet" method="post">
+    <form action="OdzyskanieHasła" method="post">
         <h2>Odzyskiwanie hasła</h2>
         <label for="reset-email">Email:</label>
         <input type="email" id="reset-email" name="email" required><br>

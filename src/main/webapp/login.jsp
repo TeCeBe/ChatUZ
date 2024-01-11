@@ -1,4 +1,3 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -58,11 +57,11 @@
             font-size: 20px;
             font-weight: bold;
         }
-        .odzyskanie-hasla-link {
+        <!--.odzyskanie-hasla-link {
             text-align: center;
             margin-top: 10px;
             color: white;
-        }
+        }-->
         .odzyskanie-hasla-link a {
             font-size: 16px;
             text-decoration: none;
@@ -73,16 +72,35 @@
             text-decoration: none;
             color: white;
         }
+        .success-message {
+            color: green;
+            margin-bottom: 10px;
+            font-size: 20px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
 <div class="login-container">
 
-    <% String error = request.getParameter("error"); %>
+    <!-- Pobieranie parametrów błędu i wiadomości z żądania -->
+    <%
+        String error = request.getParameter("error");
+        String message = request.getParameter("message");
+    %>
+
+    <!-- Wyświetlanie komunikatu o błędzie, jeśli logowanie było nieudane -->
     <% if ("invalid_login".equals(error)) { %>
     <div class="error-message">Zły login</div>
     <% } %>
 
+
+    <% if ("reset_link_sent".equals(message)) { %>
+    <div class="success-message">Link do resetowania hasła został wysłany na Twój email.</div>
+    <% } %>
+    -->
+
+    <!-- Formularz logowania -->
     <form action="LoginServlet" method="post">
         <h2>Login</h2>
         <label for="login-username">Username:</label>
@@ -94,13 +112,16 @@
         <input type="submit" value="Login">
     </form>
 
+    <!-- Link do strony rejestracji -->
     <div class="stwórz-konto-link">
         <a href="register.jsp">Stworz konto</a>
     </div>
 
+    <!--
     <div class="odzyskanie-hasla-link">
-        <a href="odzyskiwanie_hasla.jsp">Nie pamiętasz hasła? Odzyskaj je</a>
+         <a href="odzyskiwanie_hasla.jsp">Nie pamiętasz hasła? Odzyskaj je</a>
     </div>
+    -->
 
 </div>
 </body>
