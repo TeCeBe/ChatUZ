@@ -82,7 +82,7 @@
 <body>
 <div id="title">
     <div style="display: flex">
-        <a href="Main.jsp"><img src="imgs/arrow-left.png" style="height: 100%; padding-right: 10px;"></a>
+        <a href="Main.jsp"><img src="imgs/arrow-left.png" style="height: 50px; padding-right: 10px;"></a>
         <p><b>${nick}</b>   ostatnio online: teraz</p>
     </div>
     <div>
@@ -194,6 +194,13 @@
 
     window.onload = function() {
         var data = JSON.parse('${data}');
+        var party_mode_state = '${party_mode}';
+        var party_mode_checkbox = document.getElementById("partyModeCheckbox");
+        if (party_mode_state === "1")
+        {
+            party_mode_checkbox.checked = true;
+            console.log("Tryb imprezy włączony");
+        }
         var chatbox = document.getElementById("chatbox");
         for (var i = 0; i < data.length; i++) {
             var newMessage = document.createElement("message");
@@ -219,6 +226,24 @@
             textInput.value += e.target.textContent;
         }
     });
+
+    document.getElementById('partyModeCheckbox').addEventListener('change', function() {
+        var checkboxState = this.checked ? 1 : 0;
+        fetch('PartyModeServlet', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'partyMode=' + checkboxState,
+        })
+            .then(response => response.text())
+            .then(data => console.log(data))
+            .catch((error) => {
+                console.error('Błąd:', error);
+            });
+    });
+
+
 
 </script>
 </body>
