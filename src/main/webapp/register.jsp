@@ -65,9 +65,11 @@
     <%
         String error = request.getParameter("error");
         if ("username_taken".equals(error)) {
-            out.print("<div class='error-message'>Nazwa zajeta</div>");
+            out.print("<div class='error-message'>Username zajęty</div>");
         } else if ("short_password".equals(error)) {
             out.print("<div class='error-message'>Hasło musi mieć przynajmniej 8 znaków</div>");
+        } else if ("email_taken".equals(error)) {
+            out.print("<div class='error-message'>Adres email jest już zajęty</div>");
         }
     %>
 
@@ -78,6 +80,9 @@
 
         <label for="register-password">Password:</label>
         <input type="password" id="register-password" name="password" required><br>
+
+        <label for="register-email">Email:</label>
+        <input type="email" id="register-email" name="email" required><br>
 
         <input type="submit" value="Register">
     </form>

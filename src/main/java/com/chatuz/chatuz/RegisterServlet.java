@@ -12,6 +12,7 @@ public class RegisterServlet extends HttpServlet {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        String email = request.getParameter("email"); // Pobieranie e-maila
 
         if (password == null || password.length() < 8) {
             try {
@@ -22,7 +23,7 @@ public class RegisterServlet extends HttpServlet {
             return;
         }
 
-        // Haszowanie hasła za pomocą biblioteki BCrypt (zawarta w pom.xml)
+        // Haszowanie hasła za pomocą biblioteki BCrypt
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
         Connection con = null;
@@ -34,6 +35,7 @@ public class RegisterServlet extends HttpServlet {
             con = DriverManager.getConnection(
                     "jdbc:mysql://sql.freedb.tech:3306/freedb_chatuz?useSSL=false", "freedb_tecebe", "%Dn@fSFRz&ph7%3");
 
+            // Sprawdzanie, czy nazwa użytkownika jest już zajęta
             ps = con.prepareStatement("SELECT username FROM users WHERE username = ?");
             ps.setString(1, username);
             rs = ps.executeQuery();
@@ -41,13 +43,24 @@ public class RegisterServlet extends HttpServlet {
             if (rs.next()) {
                 response.sendRedirect("register.jsp?error=username_taken");
             } else {
-                ps = con.prepareStatement("INSERT INTO users (username, password) VALUES (?, ?)");
-                ps.setString(1, username);
-                ps.setString(2, hashedPassword);
-                int i = ps.executeUpdate();
+                // Sprawdzanie, czy email jest już zajęty
+                ps = con.prepareStatement("SELECT email FROM users WHERE email = ?");
+                ps.setString(1, email);
+                rs = ps.executeQuery();
 
-                if (i > 0) {
-                    response.sendRedirect("login.jsp");
+                if (rs.next()) {
+                    response.sendRedirect("register.jsp?error=email_taken");
+                } else {
+                    // Dodawanie użytkownika z hasłem i e-mailem
+                    ps = con.prepareStatement("INSERT INTO users (username, password, email) VALUES (?, ?, ?)");
+                    ps.setString(1, username);
+                    ps.setString(2, hashedPassword);
+                    ps.setString(3, email);
+                    int i = ps.executeUpdate();
+
+                    if (i > 0) {
+                        response.sendRedirect("login.jsp");
+                    }
                 }
             }
         } catch (Exception e) {
