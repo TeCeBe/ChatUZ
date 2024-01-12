@@ -91,7 +91,7 @@
 
     <!-- Wyświetlanie komunikatu o błędzie, jeśli logowanie było nieudane -->
     <% if ("invalid_login".equals(error)) { %>
-    <div class="error-message">Zły login</div>
+    <div class="error-message">Zly login</div>
     <% } %>
 
 
