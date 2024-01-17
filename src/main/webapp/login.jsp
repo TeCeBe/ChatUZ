@@ -78,6 +78,19 @@
             font-size: 20px;
             font-weight: bold;
         }
+        .message-success {
+            color: green;
+            margin-bottom: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            background-color: #ccffcc;
+            border: 1px solid #b2d8b2;
+            border-radius: 5px;
+            padding: 10px;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
     </style>
 </head>
 <body>
@@ -96,9 +109,16 @@
 
 
     <% if ("reset_link_sent".equals(message)) { %>
-    <div class="success-message">Link do resetowania hasła został wysłany na Twój email.</div>
+    <div class="success-message">Link do resetowania hasla na mailu</div>
     <% } %>
-    -->
+
+    <%
+        String successMessage = (String) request.getSession().getAttribute("successMessage");
+        if (successMessage != null && !successMessage.isEmpty()) {
+            out.println("<div class='message-success'>" + successMessage + "</div>");
+            request.getSession().removeAttribute("successMessage");
+        }
+    %>
 
     <!-- Formularz logowania -->
     <form action="LoginServlet" method="post">
@@ -117,11 +137,11 @@
         <a href="register.jsp">Stworz konto</a>
     </div>
 
-    <!--
+
     <div class="odzyskanie-hasla-link">
-         <a href="odzyskiwanie_hasla.jsp">Nie pamiętasz hasła? Odzyskaj je</a>
+         <a href="odzyskiwanie_hasla.jsp">Nie pamietasz hasla? Odzyskaj je</a>
     </div>
-    -->
+
 
 </div>
 </body>

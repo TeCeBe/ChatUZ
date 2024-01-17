@@ -1,5 +1,3 @@
-<!--
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,24 +58,17 @@
             text-decoration: none;
             color: white;
         }
+
     </style>
 </head>
 <body>
 <div class="password-reset-container">
-
-    <% String error = request.getParameter("error"); %>
-    <% if ("invalid_email".equals(error)) { %>
-    <div class="error-message">Nieznany adres email</div>
-    <% } %>
-
-    <form action="OdzyskanieHasła" method="post">
-        <h2>Odzyskiwanie hasła</h2>
+    <form action="OdzyskanieHasla" method="post">
+        <h2>Odzyskiwanie hasla</h2>
         <label for="reset-email">Email:</label>
         <input type="email" id="reset-email" name="email" required><br>
-
         <input type="submit" value="Resetuj hasło">
     </form>
-
     <div class="powrot_do_logowania">
         <a href="login.jsp">Powrót do logowania</a>
     </div>

@@ -58,13 +58,24 @@
   </form>
   <div>
     <h2>Lista Użytkowników</h2>
-    <c:forEach var="uzytkownik" items="${listaUzytkownikow}">
-      <div>
-        <p>${uzytkownik.id_to}</p>
-      </div>
+    <div id="usersList"></div>
 
-    </c:forEach>
+    <script>
+      // Pobierz dane JSON z serwera i zaktualizuj listę użytkowników
+      fetch('/FriendsServlet')
+              .then(response => response.json())
+              .then(data => {
+                const usersListDiv = document.getElementById('usersList');
+                data.forEach(user => {
+                  const userDiv = document.createElement('div');
+                  userDiv.innerHTML = `<p>${user.id_to}</p>`;
+                  usersListDiv.appendChild(userDiv);
+                });
+              })
+              .catch(error => console.error('Błąd podczas pobierania danych:', error));
+    </script>
   </div>
+
   <form action="logout.jsp" method="post">
     <input type="submit" value="Wyloguj" class="button logout-button">
   </form>
