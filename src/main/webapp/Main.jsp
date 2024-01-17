@@ -47,7 +47,7 @@
 <%
   String userName = (String) session.getAttribute("username");
   if (userName == null || userName.isEmpty()) {
-    userName = "Nieznany Użytkownik";
+    userName = "Anonim";
   }
 %>
 <div class="text-container">
@@ -56,7 +56,15 @@
   <form action="chat.jsp" method="get" style="margin-bottom: 20px;">
     <input type="submit" value="Przejdź do Chatu" class="button chat-button">
   </form>
+  <div>
+    <h2>Lista Użytkowników</h2>
+    <c:forEach var="uzytkownik" items="${listaUzytkownikow}">
+      <div>
+        <p>${uzytkownik.id_to}</p>
+      </div>
 
+    </c:forEach>
+  </div>
   <form action="logout.jsp" method="post">
     <input type="submit" value="Wyloguj" class="button logout-button">
   </form>
