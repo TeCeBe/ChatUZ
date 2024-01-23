@@ -4,7 +4,8 @@
     <file url="file://$PROJECT_DIR$/src/main/java/com/chatuz/chatuz/ChatRedirect.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/chatuz/chatuz/FriendsServlet.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/chatuz/chatuz/LoginServlet.java" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/chatuz/chatuz/OdzyskanieHasła.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/chatuz/chatuz/OdzyskanieHasla.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/chatuz/chatuz/ProcesResetowaniaHaslaServlet.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/chatuz/chatuz/RegisterServlet.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/main/webapp/Main.jsp" dialect="GenericSQL" />
   </component>

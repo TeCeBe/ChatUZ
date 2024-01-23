@@ -21,7 +21,22 @@
         <servlet-name>FriendsServlet</servlet-name>
         <url-pattern>/FriendsServlet</url-pattern>
     </servlet-mapping>
-
+    <servlet>
+        <servlet-name>OdzyskanieHasla</servlet-name>
+        <servlet-class>com.chatuz.chatuz.OdzyskanieHasla</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OdzyskanieHasla</servlet-name>
+        <url-pattern>/OdzyskanieHasla</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ProcesResetowaniaHaslaServlet</servlet-name>
+        <servlet-class>com.chatuz.chatuz.ProcesResetowaniaHaslaServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProcesResetowaniaHaslaServlet</servlet-name>
+        <url-pattern>/ProcesResetowaniaHaslaServlet</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>ChatRedirect</servlet-name>
         <servlet-class>com.chatuz.chatuz.ChatRedirect</servlet-class>
