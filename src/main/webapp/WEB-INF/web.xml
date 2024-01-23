@@ -22,6 +22,15 @@
         <url-pattern>/FriendsServlet</url-pattern>
     </servlet-mapping>
     <servlet>
+    <servlet>
+        <servlet-name>BestFriendsServlet</servlet-name>
+        <servlet-class>com.chatuz.chatuz.BestFriendsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BestFriendsServlet</servlet-name>
+        <url-pattern>/BestFriendsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>OdzyskanieHasla</servlet-name>
         <servlet-class>com.chatuz.chatuz.OdzyskanieHasla</servlet-class>
     </servlet>

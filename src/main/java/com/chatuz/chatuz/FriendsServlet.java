@@ -2,8 +2,7 @@ package com.chatuz.chatuz;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletException; // Upewnij się, że ta linia jest dodana
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -63,9 +62,6 @@ public class FriendsServlet extends HttpServlet {
         // Ustawienie odpowiedzi jako JSON
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-
-        request.setAttribute("data", jsonListaUzytkownikow);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/Main.jsp"); //chat.jsp plik ze stroną chatu
-        dispatcher.forward(request, response); //dokonaj przekirowania z przekazainem argumentów
+        response.getWriter().write(jsonListaUzytkownikow.toString());
     }
 }
