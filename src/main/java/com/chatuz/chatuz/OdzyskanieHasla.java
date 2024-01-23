@@ -36,15 +36,15 @@ public class OdzyskanieHasla extends HttpServlet {
                         try (PreparedStatement psUpdate = con.prepareStatement(
                                 "UPDATE users SET reset_token = ?, token_expiry = ? WHERE email = ?")) {
                             psUpdate.setString(1, token);
-                            psUpdate.setTimestamp(2, new Timestamp(System.currentTimeMillis() + 3600000)); // Token expiry set to 1 hour
+                            psUpdate.setTimestamp(2, new Timestamp(System.currentTimeMillis() + 3600000)); // Godzina na wygaszenie tokenu
                             psUpdate.setString(3, email);
                             psUpdate.executeUpdate();
                         }
 
-                        // Create reset link
+                        // Stworzenie linku na reset
                         String resetLink = "http://localhost:8080/ChatUZ-1.0-SNAPSHOT/resetowaniehasla.jsp?token=" + token;
 
-                        // Send email with reset link
+                        // Wyslanie
                         sendEmail(email, "Resetowanie Hasła", "Aby zresetować hasło, kliknij w poniższy link:\n" + resetLink, emailSender, emailPassword);
                         response.sendRedirect("login.jsp?message=reset_link_sent");
                     } else {
@@ -63,7 +63,7 @@ public class OdzyskanieHasla extends HttpServlet {
         properties.put("mail.smtp.ssl.trust", "smtp.office365.com");
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.smtp.host", "smtp.office365.com"); // Change to your SMTP host if different
+        properties.put("mail.smtp.host", "smtp.office365.com");
         properties.put("mail.smtp.port", "587");
 
         Session session = Session.getInstance(properties, new Authenticator() {

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Odzyskiwanie hasła</title>
+    <title>Odzyskiwanie hasla</title>
     <style>
         body {
             display: flex;
@@ -67,10 +67,10 @@
         <h2>Odzyskiwanie hasla</h2>
         <label for="reset-email">Email:</label>
         <input type="email" id="reset-email" name="email" required><br>
-        <input type="submit" value="Resetuj hasło">
+        <input type="submit" value="Resetuj haslo">
     </form>
     <div class="powrot_do_logowania">
-        <a href="login.jsp">Powrót do logowania</a>
+        <a href="login.jsp">Powrot do logowania</a>
     </div>
 </div>
 </body>
