@@ -59,7 +59,6 @@
   <div>
     <h2>Lista Użytkowników</h2>
     <div id="usersList"></div>
-
     <script>
       // Pobierz dane JSON z serwera i zaktualizuj listę użytkowników
       fetch('/FriendsServlet')
