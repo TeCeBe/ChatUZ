@@ -1,91 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Odzyskiwanie hasła</title>
   <style>
+    /* Tutaj możesz dodać swój CSS */
     body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      background: url('zdjecia/tlo_login_register.jpg') no-repeat center center fixed;
-      background-size: cover;
+      font-family: Arial, sans-serif;
     }
-    .password-reset-container {
+    .container {
+      max-width: 400px;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background: #f9f9f9;
+    }
+    h2 {
       text-align: center;
-      padding: 50px;
-      background-color: rgba(0, 0, 0, 0.5);
-      border: 2px solid #808080;
-      border-radius: 20px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      margin: 20px;
-      color: white;
     }
-    .password-reset-container h2 {
-      font-size: 32px;
-      margin-bottom: 20px;
-      color: white;
-    }
-    .password-reset-container label {
-      font-size: 20px;
+    label, input {
       display: block;
+      width: 100%;
       margin-bottom: 10px;
-      color: white;
     }
-    .password-reset-container input {
-      font-size: 20px;
-      width: 80%;
-      padding: 10px;
-      margin-bottom: 15px;
-      color: black;
+    input[type="submit"] {
+      cursor: pointer;
     }
-    .password-reset-container input[type="submit"] {
-      font-size: 20px;
-      margin-top: 10px;
-      color: black;
-    }
-    .error-message {
-      color: red;
-      margin-bottom: 10px;
-      font-size: 20px;
-      font-weight: bold;
-    }
-    .powrot_do_logowania a {
-      font-size: 16px;
-      text-decoration: none;
-      color: white;
-    }
-
   </style>
 </head>
 <body>
-<div class="password-reset-container">
 
-  <% String error = request.getParameter("error"); %>
+<div class="container">
+  <h2>Zresetuj hasło</h2>
+
+  <% String error = (String) request.getAttribute("error"); %>
   <% if (error != null && !error.isEmpty()) { %>
-  <div class="error-message"><%= error %></div>
+  <p style="color: red;"><%= error %></p>
   <% } %>
 
-  <form action="OdzyskiwanieHaslaServlet" method="post">
-    <h2>Odzyskiwanie hasła</h2>
-    <label for="reset-email">Email:</label>
-    <input type="email" id="reset-email" name="email" required>
+  <form action="ProcesResetowaniaHaslaServlet" method="post">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
 
-    <label for="reset-password">Nowe hasło:</label>
-    <input type="password" id="reset-password" name="newPassword" required>
+    <label for="newPassword">Nowe hasło:</label>
+    <input type="password" id="newPassword" name="newPassword" required>
 
-    <label for="confirm-password">Potwierdź hasło:</label>
-    <input type="password" id="confirm-password" name="confirmPassword" required>
+    <label for="confirmPassword">Potwierdź hasło:</label>
+    <input type="password" id="confirmPassword" name="confirmPassword" required>
+
+    <!-- Zakładam, że token jest przekazywany jako parametr GET lub w inny sposób -->
+    <!-- Ten input hidden powinien przechwycić wartość tokenu -->
+    <input type="hidden" name="token" value="<%= request.getParameter("token") %>">
 
     <input type="submit" value="Zresetuj hasło">
   </form>
-
-  <div class="powrot_do_logowania">
-    <a href="login.jsp">Powrót do logowania</a>
-  </div>
 </div>
+
 </body>
 </html>

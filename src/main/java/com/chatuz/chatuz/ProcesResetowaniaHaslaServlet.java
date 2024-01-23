@@ -15,23 +15,24 @@ public class ProcesResetowaniaHaslaServlet extends HttpServlet {
         String newPassword = request.getParameter("newPassword");
         String confirmPassword = request.getParameter("confirmPassword");
 
-        if (!newPassword.equals(confirmPassword)) {
-            request.setAttribute("error", "Hasla nie są takie same.");
-            request.getRequestDispatcher("resetowaniehasla.jsp").forward(request, response);
-            return;
-        }
-
-        if (newPassword.length() < 8) {
-            request.setAttribute("error", "Haslo musi mieć co najmniej 8 znaków.");
-            request.getRequestDispatcher("resetowaniehasla.jsp").forward(request, response);
-            return;
-        }
-
         String dbUrl = "jdbc:mysql://sql.freedb.tech:3306/freedb_chatuz?useSSL=false";
         String dbUser = "freedb_tecebe";
         String dbPassword = "%Dn@fSFRz&ph7%3";
 
         try {
+            // Sprawdzenie zgodności i długości hasła
+            if (!newPassword.equals(confirmPassword)) {
+                request.setAttribute("error", "Hasla nie są takie same.");
+                request.getRequestDispatcher("resetowaniehasla.jsp").forward(request, response);
+                return;
+            }
+
+            if (newPassword.length() < 8) {
+                request.setAttribute("error", "Haslo musi miec co najmniej 8 znaków.");
+                request.getRequestDispatcher("resetowaniehasla.jsp").forward(request, response);
+                return;
+            }
+
             Class.forName("com.mysql.cj.jdbc.Driver");
             try (Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
                  PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE email = ? AND reset_token = ?")) {
@@ -40,20 +41,26 @@ public class ProcesResetowaniaHaslaServlet extends HttpServlet {
                 ps.setString(2, token);
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next()) {
-                        // Sprawdzanie ważności tokenu (np. czy nie wygasł)
-                        // Można to zrobić porównując bieżący czas z czasem wygaśnięcia tokenu
+                        Timestamp tokenExpiration = rs.getTimestamp("token_expiration");
+                        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
 
-                        // Token jest prawidłowy, aktualizacja hasła
-                        try (PreparedStatement psUpdate = con.prepareStatement(
-                                "UPDATE users SET password = ?, reset_token = NULL WHERE email = ?")) {
-                            psUpdate.setString(1, newPassword); // Hasło powinno być zahashowane
-                            psUpdate.setString(2, email);
-                            psUpdate.executeUpdate();
+                        if (currentTime.before(tokenExpiration)) {
+                            // Token jest prawidłowy, aktualizacja hasła
+                            try (PreparedStatement psUpdate = con.prepareStatement(
+                                    "UPDATE users SET password = ?, reset_token = NULL, token_expiration = NULL WHERE email = ?")) {
+                                psUpdate.setString(1, newPassword); // Hasło powinno być zahashowane
+                                psUpdate.setString(2, email);
+                                psUpdate.executeUpdate();
 
-                            // Ustawianie komunikatu o sukcesie w sesji
-                            HttpSession session = request.getSession();
-                            session.setAttribute("message-success", "Hasło zmienione pomyslnie");
-                            response.sendRedirect("login.jsp");
+                                // Ustawianie komunikatu o sukcesie w sesji
+                                HttpSession session = request.getSession();
+                                session.setAttribute("message-success", "Haslo zmienione pomyslnie");
+                                response.sendRedirect("login.jsp");
+                            }
+                        } else {
+                            // Token wygasł
+                            request.setAttribute("error", "Token uwierzytelniania wygasł");
+                            request.getRequestDispatcher("resetowaniehasla.jsp").forward(request, response);
                         }
                     } else {
                         // Błędny token lub email

@@ -72,12 +72,6 @@
             text-decoration: none;
             color: white;
         }
-        .success-message {
-            color: green;
-            margin-bottom: 10px;
-            font-size: 20px;
-            font-weight: bold;
-        }
         .message-success {
             color: green;
             margin-bottom: 10px;
@@ -109,16 +103,17 @@
 
 
     <% if ("reset_link_sent".equals(message)) { %>
-    <div class="success-message">Link do resetowania hasla na mailu</div>
+    <div class="message-success">Link do resetowania hasla na mailu</div>
     <% } %>
 
     <%
-        String successMessage = (String) request.getSession().getAttribute("successMessage");
+        String successMessage = (String) request.getSession().getAttribute("message-success");
         if (successMessage != null && !successMessage.isEmpty()) {
             out.println("<div class='message-success'>" + successMessage + "</div>");
-            request.getSession().removeAttribute("successMessage");
+            request.getSession().removeAttribute("message-success");
         }
     %>
+
 
     <!-- Formularz logowania -->
     <form action="LoginServlet" method="post">
