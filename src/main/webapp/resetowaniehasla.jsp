@@ -68,24 +68,23 @@
 </head>
 <body>
 
-<div class="container">
-  <h2>Zresetuj haslo</h2>
+<div class="password-reset-container">
+  <h2>Zresetuj hasło</h2>
 
   <% String error = (String) request.getAttribute("error"); %>
   <% if (error != null && !error.isEmpty()) { %>
-  <p style="color: red;"><%= error %></p>
+  <p class="error-message"><%= error %></p>
   <% } %>
 
   <form action="ProcesResetowaniaHaslaServlet" method="post">
     <label for="email">Email:</label>
     <input type="email" id="email" name="email" required>
 
-    <label for="newPassword">Nowe haslo:</label>
+    <label for="newPassword">Nowe hasło:</label>
     <input type="password" id="newPassword" name="newPassword" required>
 
-    <label for="confirmPassword">Potwierdz haslo:</label>
+    <label for="confirmPassword">Potwierdź hasło:</label>
     <input type="password" id="confirmPassword" name="confirmPassword" required>
-
 
     <input type="hidden" name="token" value="<%= request.getParameter("token") %>">
 

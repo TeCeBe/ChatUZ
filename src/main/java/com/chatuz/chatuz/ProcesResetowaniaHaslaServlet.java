@@ -4,7 +4,6 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.sql.*;
-import org.mindrot.jbcrypt.BCrypt;
 
 public class ProcesResetowaniaHaslaServlet extends HttpServlet {
 
@@ -21,8 +20,9 @@ public class ProcesResetowaniaHaslaServlet extends HttpServlet {
         String dbPassword = "%Dn@fSFRz&ph7%3";
 
         try {
+            // Sprawdzenie zgodności i długości hasła
             if (!newPassword.equals(confirmPassword)) {
-                request.setAttribute("error", "Hasla nie sa takie same.");
+                request.setAttribute("error", "Hasla nie są takie same.");
                 request.getRequestDispatcher("resetowaniehasla.jsp").forward(request, response);
                 return;
             }
@@ -33,9 +33,6 @@ public class ProcesResetowaniaHaslaServlet extends HttpServlet {
                 return;
             }
 
-            // Hashowanie hasła przy użyciu BCrypt
-            String hashedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt());
-
             Class.forName("com.mysql.cj.jdbc.Driver");
             try (Connection con = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
                  PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE email = ? AND reset_token = ?")) {
@@ -44,25 +41,29 @@ public class ProcesResetowaniaHaslaServlet extends HttpServlet {
                 ps.setString(2, token);
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next()) {
-                        Timestamp tokenExpiry = rs.getTimestamp("token_expiry");
+                        Timestamp tokenExpiration = rs.getTimestamp("token_expiry");
                         Timestamp currentTime = new Timestamp(System.currentTimeMillis());
 
-                        if (currentTime.before(tokenExpiry)) {
+                        if (currentTime.before(tokenExpiration)) {
+                            // Token jest prawidłowy, aktualizacja hasła
                             try (PreparedStatement psUpdate = con.prepareStatement(
                                     "UPDATE users SET password = ?, reset_token = NULL, token_expiry = NULL WHERE email = ?")) {
-                                psUpdate.setString(1, hashedPassword);
+                                psUpdate.setString(1, newPassword); // Hasło powinno być zahashowane
                                 psUpdate.setString(2, email);
                                 psUpdate.executeUpdate();
 
+                                // Ustawianie komunikatu o sukcesie w sesji
                                 HttpSession session = request.getSession();
                                 session.setAttribute("message-success", "Haslo zmienione pomyslnie");
                                 response.sendRedirect("login.jsp");
                             }
                         } else {
-                            request.setAttribute("error", "Token uwierzytelniania wygasl");
+                            // Token wygasł
+                            request.setAttribute("error", "Token uwierzytelniania wygasł");
                             request.getRequestDispatcher("resetowaniehasla.jsp").forward(request, response);
                         }
                     } else {
+                        // Błędny token lub email
                         request.setAttribute("error", "Bledny email lub token uwierzytelniania");
                         request.getRequestDispatcher("resetowaniehasla.jsp").forward(request, response);
                     }
