@@ -57,6 +57,15 @@
             color: white;
         }
     </style>
+    <style>
+        /* Styl dla przycisku zmiany języka */
+        .language-switch {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 <div class="login-container">
@@ -76,6 +85,17 @@
     <div class="powrot_do_logowania">
         <a href="register.html">Stworz konto</a>
     </div>
+    <div class="language-switch">
+        <button onclick="changeLanguage('pl')">PL</button>
+        <button onclick="changeLanguage('en')">EN</button>
+    </div>
+    <script>
+        // Funkcja do zmiany języka
+        function changeLanguage(lang) {
+            // Logika zmiany języka (przykładowo przeładowanie strony z odpowiednim parametrem)
+            window.location.href = '?lang=' + lang;
+        }
+    </script>
 </div>
 </body>
 </html>
