@@ -33,7 +33,7 @@
 <body>
 <div id="content">
     <h1 id="title1">Nie znaleziono użytkownika o takiej nazwie!</h1>
-    <input id="submitBtn" type="submit" value="Powrót" onclick="window.location.href='Main.jsp';">
+    <input id="submitBtn" type="submit" value="Powrót" onclick="window.location.href='FriendsServlet';">
 </div>
 </body>
 </html>

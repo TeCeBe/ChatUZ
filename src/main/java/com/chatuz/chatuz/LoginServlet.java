@@ -31,7 +31,7 @@ public class LoginServlet extends HttpServlet {
                 // Utworzenie sesji i przekierowanie do głównej strony aplikacji
                 HttpSession session = request.getSession();
                 session.setAttribute("username", username);
-                response.sendRedirect("Main.jsp");
+                response.sendRedirect("FriendsServlet");
             } else {
                 // Przekierowanie do strony logowania z komunikatem o błędzie
                 response.sendRedirect("login.jsp?error=invalid_login");
@@ -65,7 +65,7 @@ public class LoginServlet extends HttpServlet {
     // Prywatna metoda do nawiązywania połączenia z bazą danych
     private Connection getConnection() throws SQLException {
         // Dane do połączenia z bazą danych
-        String url = "jdbc:mysql://sql.freedb.tech:3306/freedb_chatuz?useSSL=false";
+        String url = "jdbc:mysql://sql.freedb.tech:3306/freedb_chatuz?allowPublicKeyRetrieval=true&useSSL=false";
         String user = "freedb_tecebe";
         String password = "%Dn@fSFRz&ph7%3";
         return DriverManager.getConnection(url, user, password);

@@ -47,13 +47,13 @@ public class ChatRedirect extends HttpServlet {
             //sprawdzanie
             if (usercheckrs.next())
             {
-                if (Objects.equals(usercheckrs.getString("count"), "0"))
+                /*if (Objects.equals(usercheckrs.getString("count"), "0"))
                 {
                     //jeśli nie znaleziono to przekieruj
                     response.sendRedirect("not-found.jsp");
                 }
                 else
-                {
+                {*/
                     //jeśli znaleziono idź dalej, łączenie z bazą
                     //odcyzt wiadomości
                     PreparedStatement ps = conn.prepareStatement("SELECT * FROM (SELECT date, id_from, id_to, message FROM messages WHERE (id_from='" + userName + "' AND id_to='" + nick + "') OR (id_to='" + userName + "' AND id_from='" + nick + "') ORDER BY date DESC LIMIT 100) AS subquery ORDER BY date ASC;");
@@ -80,7 +80,7 @@ public class ChatRedirect extends HttpServlet {
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/chat.jsp"); //chat.jsp plik ze stroną chatu
                     dispatcher.forward(request, response); //dokonaj przekirowania z przekazainem argumentów
                 }
-            }
+            //}
 
         } catch (SQLException e) {
             throw new ServletException("Błąd podczas komunikacji z bazą danych", e);

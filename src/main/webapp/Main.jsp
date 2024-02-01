@@ -60,18 +60,17 @@
     <h2>Lista Użytkowników</h2>
     <div id="usersList"></div>
     <script>
-      // Pobierz dane JSON z serwera i zaktualizuj listę użytkowników
-      fetch('/FriendsServlet')
-              .then(response => response.json())
-              .then(data => {
-                const usersListDiv = document.getElementById('usersList');
-                data.forEach(user => {
-                  const userDiv = document.createElement('div');
-                  userDiv.innerHTML = `<p>${user.id_to}</p>`;
-                  usersListDiv.appendChild(userDiv);
-                });
-              })
-              .catch(error => console.error('Błąd podczas pobierania danych:', error));
+      window.onload = function() {
+        var data = JSON.parse('${data}');
+        var chatbox = document.getElementById("usersList");
+        for (var i = 0; i < data.length; i++) {
+          //uzupełnianie DIVa wiadomościami z bazy
+          var newMessage = document.createElement("usersers");
+          //porównywanie nadawcy z odbiorca by wyświetlić we właściwym miejscu
+            newMessage.innerHTML = "<p style='text-align:center; border-radius: 12px; background-color: green; color: white; padding: 5px;'><a href='http://localhost:8080/ChatUZ-1.0-SNAPSHOT/ChatRedirect?username="+ data[i].id_to + "'>"+data[i].id_to+"</a></p>";
+          chatbox.appendChild(newMessage);
+        }
+      };
     </script>
   </div>
 
