@@ -67,7 +67,7 @@
           //uzupełnianie DIVa wiadomościami z bazy
           var newMessage = document.createElement("usersers");
           //porównywanie nadawcy z odbiorca by wyświetlić we właściwym miejscu
-            newMessage.innerHTML = "<p style='text-align:center; border-radius: 12px; background-color: green; color: white; padding: 5px;'><a href='http://localhost:8080/ChatUZ-1.0-SNAPSHOT/ChatRedirect?username="+ data[i].id_to + "'>"+data[i].id_to+"</a></p>";
+            newMessage.innerHTML = "<p style='text-align:center; border-radius: 12px; background-color: green; color: white; padding: 5px;'><a href='http://localhost:8080/ChatUZ-1.0-SNAPSHOT/ChatRedirect?nickname="+ data[i].id_to + "'>"+data[i].id_to+"</a></p>";
           chatbox.appendChild(newMessage);
         }
       };
