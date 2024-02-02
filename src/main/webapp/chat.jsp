@@ -78,7 +78,7 @@
 <body>
 <div id="title">
     <div style="display: flex">
-        <a href="Main.jsp"><img src="imgs/arrow-left.png" style="height: 50px; padding-right: 10px;"></a>
+        <a href="FriendsServlet"><img src="imgs/arrow-left.png" style="height: 50px; padding-right: 10px;"></a>
         <p><b>${nick}</b>   ostatnio online: teraz</p>
     </div>
     <div>
