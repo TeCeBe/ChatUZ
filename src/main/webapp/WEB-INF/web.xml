@@ -12,7 +12,6 @@
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/RegisterServlet</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>FriendsServlet</servlet-name>
         <servlet-class>com.chatuz.chatuz.FriendsServlet</servlet-class>
@@ -83,5 +82,14 @@
         <filter-name>SessionCheckFilter</filter-name>
         <url-pattern>/ChatRedirect</url-pattern>
     </filter-mapping>
+    <filter>
+        <filter-name>translationFilter</filter-name>
+        <filter-class>com.chatuz.chatuz.TranslationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>translationFilter</filter-name>
+        <url-pattern>/login.jsp</url-pattern>
+    </filter-mapping>
+
 
 </web-app>

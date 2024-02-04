@@ -58,10 +58,10 @@
             font-weight: bold;
         }
         <!--.odzyskanie-hasla-link {
-            text-align: center;
-            margin-top: 10px;
-            color: white;
-        }-->
+                text-align: center;
+                margin-top: 10px;
+                color: white;
+            }-->
         .odzyskanie-hasla-link a {
             font-size: 16px;
             text-decoration: none;
@@ -134,7 +134,7 @@
 
 
     <div class="odzyskanie-hasla-link">
-         <a href="odzyskiwanie_hasla.jsp">Nie pamietasz hasla? Odzyskaj je</a>
+        <a href="odzyskiwanie_hasla.jsp">Nie pamietasz hasla? Odzyskaj je</a>
     </div>
 
 
